@@ -5,15 +5,7 @@ import AddTarefa from "./AdicionarTarefa";
 function MyProject() {
   const [frase, setFrase] = useState("");
   const [autor, setAutor] = useState("");
-  const [tarefas, SetTarefas] = useState([
-    {
-      id: 1,
-      Tarefa: "cagar",
-      EstaCompleta: false,
-      EstaFavoritada: false,
-      Pasta: "bhanheiro",
-    },
-  ]);
+  const [tarefas, SetTarefas] = useState([]);
   const total = tarefas.length;
   const concluidas = tarefas.filter((t) => t.EstaCompleta).length;
   const NaoConcluidas = tarefas.filter((t) => !t.EstaCompleta).length;
