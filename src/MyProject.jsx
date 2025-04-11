@@ -1,79 +1,77 @@
 import { useState } from "react";
-import Tarefas from "./Tarefas";
-import AddTarefa from "./AdicionarTarefa";
+import Tasks from "./Tasks";
+import AddTask from "./AddTask";
 
 function MyProject() {
-  const [frase, setFrase] = useState("");
-  const [autor, setAutor] = useState("");
-  const [tarefas, SetTarefas] = useState([]);
-  const total = tarefas.length;
-  const concluidas = tarefas.filter((t) => t.EstaCompleta).length;
-  const NaoConcluidas = tarefas.filter((t) => !t.EstaCompleta).length;
+  const [fact, setFact] = useState("");
+  const [tasks, setTasks] = useState([]);
+  const total = tasks.length;
+  const completed = tasks.filter((t) => t.isCompleted).length;
+  const notCompleted = tasks.filter((t) => !t.isCompleted).length;
 
-  function Favoritar(taskId) {
-    const newTasks = tarefas.map((tarefa) => {
-      if (tarefa.id == taskId) {
-        return { ...tarefa, EstaFavoritada: !tarefa.EstaFavoritada };
+  function toggleFavorite(taskId) {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id == taskId) {
+        return { ...task, isFavorited: !task.isFavorited };
       }
-      return tarefa;
+      return task;
     });
-    SetTarefas(newTasks);
+    setTasks(updatedTasks);
   }
 
-  function DeleteTask(tarefaId) {
-    const newTasks = tarefas.filter((tarefa) => tarefaId !== tarefa.id);
-    SetTarefas(newTasks);
+  function deleteTask(taskId) {
+    const updatedTasks = tasks.filter((task) => taskId !== task.id);
+    setTasks(updatedTasks);
   }
 
-  function AddItem(tarefa, pasta) {
-    const NovasTarefas = {
+  function addTask(taskText, folder) {
+    const newTask = {
       id: Date.now(),
-      Tarefa: tarefa,
-      EstaCompleta: false,
-      EstaFavoritada: false,
-      Pasta: pasta,
+      task: taskText,
+      isCompleted: false,
+      isFavorited: false,
+      folder: folder,
     };
-    SetTarefas([...tarefas, NovasTarefas]);
+    setTasks([...tasks, newTask]);
   }
-  function OnClickTask(taskId) {
-    const newTasks = tarefas.map((tarefa) => {
-      if (tarefa.id == taskId) {
-        return { ...tarefa, EstaCompleta: !tarefa.EstaCompleta };
+
+  function toggleTask(taskId) {
+    const updatedTasks = tasks.map((task) => {
+      if (task.id == taskId) {
+        return { ...task, isCompleted: !task.isCompleted };
       }
-      return tarefa;
+      return task;
     });
-    SetTarefas(newTasks);
+    setTasks(updatedTasks);
   }
 
   return (
     <div className="bg-slate-500 min-h-screen p-7 flex justify-center">
-      <div className=" text-center space-y-2">
-        <h1 className="text-slate-700 text-4xl">GERENCIADOR DE TAREFAS</h1>
-        <AddTarefa AddItem={AddItem} />
-        <Tarefas
-          tarefas={tarefas}
-          OnClickTask={OnClickTask}
-          Favoritar={Favoritar}
-          DeleteTask={DeleteTask}
-          NaoConcluidas={NaoConcluidas}
-          concluidas={concluidas}
+      <div className="text-center space-y-2">
+        <h1 className="text-slate-700 text-4xl">TASK MANAGER</h1>
+        <AddTask addTask={addTask} />
+        <Tasks
+          tasks={tasks}
+          toggleTask={toggleTask}
+          toggleFavorite={toggleFavorite}
+          deleteTask={deleteTask}
+          notCompleted={notCompleted}
+          completed={completed}
           total={total}
         />
-        <div className="bg-slate-400 rounded-md p-5 text-3xl w-[660px] space-y-2 ">
-          Frase:<h1>{frase}</h1>
-          Autor:<h2>{autor}</h2>
+        <div className="bg-slate-400 rounded-md p-5 text-3xl w-[660px] space-y-2">
+          Fact:<h1>{fact}</h1>
           <button
             className="rounded-md bg-slate-300 text-3xl p-2"
             onClick={() => {
-              fetch("https://dummyjson.com/quotes/random")
+              fetch("https://uselessfacts.jsph.pl/random.json?language=pt")
                 .then((res) => res.json())
                 .then((data) => {
-                  setFrase(data.quote);
-                  setAutor(data.author);
+                  setFact(data.text);
                 });
             }}
           >
-            NovaFrase
+            New Fact
           </button>
         </div>
       </div>

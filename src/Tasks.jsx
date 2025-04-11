@@ -10,7 +10,7 @@ import {
   X,
 } from "lucide-react";
 
-function Tarefas(props) {
+function Tasks(props) {
   return (
     <div>
       <ul className="p-6 bg-slate-400 rounded-md space-y-2">
@@ -19,44 +19,44 @@ function Tarefas(props) {
             <Hourglass /> TOTAL: {props.total}
           </h1>
           <h1 className="flex">
-            <h1 className="text-red-600">
+            <span className="text-red-600">
               <X />
-            </h1>
-            PENDENTES: {props.NaoConcluidas}
+            </span>
+            PENDING: {props.notCompleted}
           </h1>
           <h1 className="flex">
-            <h1 className="text-green-500">
+            <span className="text-green-500">
               <Check />
-            </h1>
-            CONCLUIDAS: {props.concluidas}
+            </span>
+            COMPLETED: {props.completed}
           </h1>
         </div>
-        {props.tarefas.map((tarefa) => (
-          <li key={tarefa.id} className="flex space-x-3">
+        {props.tasks.map((task) => (
+          <li key={task.id} className="flex space-x-3">
             <button
               className={`rounded-md bg-slate-300 p-1 ${
-                tarefa.EstaCompleta ? "text-green-500" : "text-red-600"
+                task.isCompleted ? "text-green-500" : "text-red-600"
               }`}
-              onClick={() => props.OnClickTask(tarefa.id)}
+              onClick={() => props.toggleTask(task.id)}
             >
-              {tarefa.EstaCompleta ? <CircleCheckIcon /> : <CircleX />}
+              {task.isCompleted ? <CircleCheckIcon /> : <CircleX />}
             </button>
             <button
-              onClick={() => props.Favoritar(tarefa.id)}
+              onClick={() => props.toggleFavorite(task.id)}
               className={`rounded-md bg-slate-300 p-1 ${
-                tarefa.EstaFavoritada ? "text-yellow-500" : "text-black"
+                task.isFavorited ? "text-yellow-500" : "text-black"
               }`}
             >
-              {tarefa.EstaFavoritada ? <StarIcon /> : <StarOffIcon />}
+              {task.isFavorited ? <StarIcon /> : <StarOffIcon />}
             </button>
             <h1 className="w-full bg-slate-300 rounded-md px-1 text-2xl text-left">
-              {tarefa.Tarefa}
+              {task.task}
             </h1>
             <button className="bg-slate-300 rounded-md p-1">
               <FolderSyncIcon />
             </button>
             <button
-              onClick={() => props.DeleteTask(tarefa.id)}
+              onClick={() => props.deleteTask(task.id)}
               className="text-red-600 bg-slate-300 rounded-md px-1"
             >
               <Trash2Icon />
@@ -67,4 +67,4 @@ function Tarefas(props) {
     </div>
   );
 }
-export default Tarefas;
+export default Tasks;

@@ -1,8 +1,8 @@
 import { useState } from "react";
 
-function AddTarefa(props) {
-  const [tarefa, SetTarefa] = useState("");
-  const [Pasta, SetPasta] = useState("");
+function AddTask(props) {
+  const [task, setTask] = useState("");
+  const [folder, setFolder] = useState("");
   return (
     <div>
       <ul className="p-6 bg-slate-400 rounded-md space-y-2">
@@ -10,34 +10,34 @@ function AddTarefa(props) {
           <input
             className="rounded-md bg-slate-300 w-full text-3xl"
             type="text"
-            placeholder="TAREFA"
-            onChange={(e) => SetTarefa(e.target.value)}
-            value={tarefa}
-          ></input>
+            placeholder="TASK"
+            onChange={(e) => setTask(e.target.value)}
+            value={task}
+          />
         </li>
         <li>
           <input
-            value={Pasta}
+            value={folder}
             className="rounded-md bg-slate-300 w-full text-3xl"
             type="text"
-            placeholder="PASTA"
-            onChange={(e) => SetPasta(e.target.value)}
-          ></input>
+            placeholder="FOLDER"
+            onChange={(e) => setFolder(e.target.value)}
+          />
         </li>
         <li>
           <button
             className="rounded-md bg-slate-300 w-full text-3xl"
             onClick={() => {
-              props.AddItem(tarefa, Pasta);
-              SetTarefa("");
-              SetPasta("");
+              props.addTask(task, folder);
+              setTask("");
+              setFolder("");
             }}
           >
-            ADICIONAR
+            ADD
           </button>
         </li>
       </ul>
     </div>
   );
 }
-export default AddTarefa;
+export default AddTask;
