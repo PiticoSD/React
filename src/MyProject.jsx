@@ -1,17 +1,31 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Tasks from "./Tasks";
 import AddTask from "./AddTask";
 
 function MyProject() {
   const [fact, setFact] = useState("");
   const [tasks, setTasks] = useState([]);
+
+  useEffect(() => {
+    const savedTasks = JSON.parse(localStorage.getItem("tasks"));
+    if (savedTasks) {
+      setTasks(savedTasks);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (tasks.length > 0) {
+      localStorage.setItem("tasks", JSON.stringify(tasks));
+    }
+  }, [tasks]);
+
   const total = tasks.length;
   const completed = tasks.filter((t) => t.isCompleted).length;
   const notCompleted = tasks.filter((t) => !t.isCompleted).length;
 
   function toggleFavorite(taskId) {
     const updatedTasks = tasks.map((task) => {
-      if (task.id == taskId) {
+      if (task.id === taskId) {
         return { ...task, isFavorited: !task.isFavorited };
       }
       return task;
@@ -37,7 +51,7 @@ function MyProject() {
 
   function toggleTask(taskId) {
     const updatedTasks = tasks.map((task) => {
-      if (task.id == taskId) {
+      if (task.id === taskId) {
         return { ...task, isCompleted: !task.isCompleted };
       }
       return task;
