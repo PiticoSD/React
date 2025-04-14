@@ -3,6 +3,7 @@ import { useState } from "react";
 function AddTask(props) {
   const [task, setTask] = useState("");
   const [folder, setFolder] = useState("");
+
   return (
     <div>
       <ul className="p-6 bg-slate-400 rounded-md space-y-2">
@@ -15,6 +16,7 @@ function AddTask(props) {
             value={task}
           />
         </li>
+
         <li>
           <input
             value={folder}
@@ -40,4 +42,5 @@ function AddTask(props) {
     </div>
   );
 }
+
 export default AddTask;

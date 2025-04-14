@@ -14,6 +14,12 @@ function Tasks(props) {
   return (
     <div>
       <ul className="p-6 bg-slate-400 rounded-md space-y-2">
+        <select className="bg-slate-300 w-full text-2xl rounded-md">
+          <option value="All">All</option>
+          <option value="Completed">Completed</option>
+          <option value="InCompleted">InCompleted</option>
+        </select>
+
         <div className="flex space-x-14 text-2xl bg-slate-300 rounded-md p-2">
           <h1 className="flex">
             <Hourglass /> TOTAL: {props.total}

@@ -5,6 +5,7 @@ import AddTask from "./AddTask";
 function MyProject() {
   const [fact, setFact] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [theme, setTheme] = useState("light");
 
   useEffect(() => {
     const savedTasks = JSON.parse(localStorage.getItem("tasks"));
@@ -60,9 +61,26 @@ function MyProject() {
   }
 
   return (
-    <div className="bg-slate-500 min-h-screen p-7 flex justify-center">
+    <div
+      className={`min-h-screen p-7 flex justify-center transition-all duration-500 ${
+        theme === "light" ? "bg-slate-300 " : "bg-slate-900 "
+      }`}
+    >
       <div className="text-center space-y-2">
-        <h1 className="text-slate-700 text-4xl">TASK MANAGER</h1>
+        <h1
+          className={`text-4xl ${
+            theme === "light" ? "text-slate-800" : "text-slate-300"
+          }`}
+        >
+          TASK MANAGER
+        </h1>
+        <button
+          className="text-2xl bg-slate-400 rounded-md p-2 mb-4"
+          onClick={() => setTheme(theme === "light" ? "dark" : "light")}
+        >
+          {theme === "light" ? "☀️ Light Mode" : "🌙 Dark Mode"}
+        </button>
+
         <AddTask addTask={addTask} />
         <Tasks
           tasks={tasks}
